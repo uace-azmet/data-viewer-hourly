@@ -30,7 +30,7 @@ timeseriesSidebar <-
         bslib::tooltip(
           bsicons::bs_icon("info-circle"),
           "Specify a station group to highlight and variable to show in the graph.",
-          id = "infoDataOptions",
+          id = "infoDataDisplay",
           placement = "right"
         ),
         

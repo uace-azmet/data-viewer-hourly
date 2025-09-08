@@ -17,8 +17,7 @@ fxn_timeseriesGraphTitle <- function(startDate, endDate) {
               "Hourly data from ", 
               gsub(" 0", " ", format(startDate, "%B %d, %Y")), 
               " through ", 
-              gsub(" 0", " ", format(endDate, "%B %d, %Y")), 
-              " from across the network"
+              gsub(" 0", " ", format(endDate, "%B %d, %Y"))
             )
           )
         ),

@@ -178,6 +178,7 @@
 }
 
 .modal-title {
+  font-weight: normal !important; 
   margin-top: 0px !important;
 }
 
@@ -203,6 +204,20 @@
   text-shadow: none !important;
 }
 
+.month.disabled {
+  background-color: #FFFFFF !important;
+  border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
+  text-shadow: none !important;
+}
+
+.month.disabled:hover {
+  background-color: #FFFFFF !important;
+  border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
+  text-shadow: none !important;
+}
+
 .month.focused {
   background-color: #FFFFFF !important;
   border-color: none !important;
@@ -224,12 +239,29 @@
   text-shadow: none !important;
 }
 
+.month.focused.disabled {
+  background-color: #FFFFFF !important;
+  border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
+  text-shadow: none !important;
+}
+
+.month.focused.disabled:hover {
+  background-color: #FFFFFF !important;
+  border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
+  text-shadow: none !important;
+}
+
 .next:hover {
   background-color: rgb(226, 233, 235) !important;
 }
 
 .page-bottom-text {
-  padding-top: 3rem;
+  color: #191919;
+  padding-left: 24px;
+  padding-right: 24px;
+  padding-top: 3rem !important;
 }
 
 .prev:hover {
@@ -322,12 +354,27 @@
   text-shadow: none !important;
 }
 
+.year.disabled {
+  background-color: #FFFFFF !important;
+  border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
+  text-shadow: none !important;
+}
+
+.year.disabled:hover {
+  background-color: #FFFFFF !important;
+  border-color: none !important;
+  color: var(--bs-tertiary-color) !important;
+  text-shadow: none !important;
+}
+
 .year.focused {
   background-color: #FFFFFF !important;
   border-color: none !important;
   color: var(--bs-body-color) !important;
   text-shadow: none !important;
 }
+
 
 /* id */
 

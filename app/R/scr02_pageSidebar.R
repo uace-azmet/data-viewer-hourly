@@ -32,7 +32,7 @@ pageSidebar <-
             bslib::tooltip(
               bsicons::bs_icon("info-circle"),
               "Set start and end dates of the period of interest. Then, click or tap 'RETRIEVE HOURLY DATA'.",
-              id = "infoDataOptions",
+              id = "infoDateSelection",
               placement = "right"
             )
           ),

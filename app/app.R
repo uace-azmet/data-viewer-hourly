@@ -30,23 +30,19 @@ ui <-
 
 server <- function(input, output, session) {
   shinyjs::useShinyjs(html = TRUE)
-  shinyjs::hideElement("navsetCardTab")
   shinyjs::hideElement("pageBottomText")
-  # shinyjs::hideElement("timeseriesAccordion")
   
   
   # Observables -----
   
   shiny::observeEvent(input$retrieveHourlyData, {
     if (input$startDate > input$endDate) {
-      shiny::showModal(datepickerErrorModal) # `scr06_datepickerErrorModal.R`
+      shiny::showModal(datepickerErrorModal) # `scr##_datepickerErrorModal.R`
     }
   })
   
   shiny::observeEvent(hourlyData(), {
-    shinyjs::showElement("navsetCardTab")
     shinyjs::showElement("pageBottomText")
-    # shinyjs::showElement("timeseriesAccordion")
     
     shiny::updateSelectInput(
       inputId = "stationGroup",

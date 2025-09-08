@@ -26,18 +26,20 @@ pageSidebar <-
         htmltools::HTML(
           paste0(
             bsicons::bs_icon("calendar-event"), 
-            htmltools::HTML("&nbsp;"),
-            htmltools::HTML("&nbsp;"),
-            toupper("DATE SELECTION")
+            htmltools::HTML("&nbsp;&nbsp;"),
+            toupper("DATE SELECTION"),
+            htmltools::HTML("&nbsp;&nbsp;&nbsp;&nbsp;"),
+            bslib::tooltip(
+              bsicons::bs_icon("info-circle"),
+              "Set start and end dates of the period of interest. Then, click or tap 'RETRIEVE HOURLY DATA'.",
+              id = "infoDataOptions",
+              placement = "right"
+            )
           ),
         ),
         
-        class = "page-sidebar"
+        class = "date-selection-title"
       ),
-      
-      shiny::helpText(shiny::em(
-        "Set start and end dates of the period of interest. Then, click or tap 'RETRIEVE HOURLY DATA'. Once data appear, click or tap the above chevron to toggle sidebar visibility."
-      )),
       
       shiny::dateInput(
         inputId = "startDate",

@@ -11,8 +11,7 @@ fxn_timeseriesGraphTitle <- function(startDate, endDate) {
       htmltools::HTML(
         paste0(
           bsicons::bs_icon("graph-up"), 
-          htmltools::HTML("&nbsp;"),
-          htmltools::HTML("&nbsp;"),
+          htmltools::HTML("&nbsp;&nbsp;"),
           toupper(
             paste0(
               "Hourly data from ", 
@@ -23,6 +22,13 @@ fxn_timeseriesGraphTitle <- function(startDate, endDate) {
             )
           )
         ),
+      ),
+      htmltools::HTML("&nbsp;&nbsp;&nbsp;&nbsp;"),
+      bslib::tooltip(
+        bsicons::bs_icon("info-circle"),
+        "Hover over data for variable values and click or tap on legend items to toggle data visibility. Select from the icons to the right of the graph for additional functionality.",
+        id = "infoDataOptions",
+        placement = "right"
       ),
       
       class = "timeseries-graph-title"

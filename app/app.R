@@ -30,8 +30,9 @@ ui <-
 
 server <- function(input, output, session) {
   shinyjs::useShinyjs(html = TRUE)
-  shinyjs::hideElement("timeseriesAccordion")
+  shinyjs::hideElement("navsetCardTab")
   shinyjs::hideElement("pageBottomText")
+  # shinyjs::hideElement("timeseriesAccordion")
   
   
   # Observables -----
@@ -43,8 +44,9 @@ server <- function(input, output, session) {
   })
   
   shiny::observeEvent(hourlyData(), {
-    shinyjs::showElement("timeseriesAccordion")
+    shinyjs::showElement("navsetCardTab")
     shinyjs::showElement("pageBottomText")
+    # shinyjs::showElement("timeseriesAccordion")
     
     shiny::updateSelectInput(
       inputId = "stationGroup",
@@ -109,11 +111,6 @@ server <- function(input, output, session) {
   output$timeseriesGraphFooter <- shiny::renderUI({
     shiny::req(hourlyData())
     fxn_timeseriesGraphFooter()
-  })
-  
-  output$timeseriesGraphHelpText <- shiny::renderUI({
-    shiny::req(hourlyData())
-    fxn_timeseriesGraphHelpText()
   })
   
   output$timeseriesGraphTitle <- shiny::renderUI({

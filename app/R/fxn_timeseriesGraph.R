@@ -43,10 +43,10 @@ fxn_timeseriesGraph <- function(inData, stationGroup, stationVariable) {
       name = "other stations",
       hoverinfo = "text",
       text = ~paste0(
-        "<br><b>", stationVariable, ":</b>  ", .data[[stationVariable]],
-        "<br><b>AZMet Station:</b>  ", meta_station_name,
-        "<br><b>Date:</b>  ", gsub(" 0", " ", format(date_datetime, "%b %d, %Y")),
-        "<br><b>Time:</b>  ", format(date_datetime, "%H:%M:%S")
+        "<br><b>", stationVariable, ":</b> ", .data[[stationVariable]],
+        "<br><b>AZMet Station:</b> ", meta_station_name,
+        "<br><b>Date:</b> ", gsub(" 0", " ", format(date_datetime, "%b %d, %Y")),
+        "<br><b>Time:</b> ", format(date_datetime, "%H:%M:%S")
       ),
       showlegend = TRUE,
       legendgroup = "dataOtherStations",
@@ -72,10 +72,10 @@ fxn_timeseriesGraph <- function(inData, stationGroup, stationVariable) {
       name = ~meta_station_name,
       hoverinfo = "text",
       text = ~paste0(
-        "<br><b>", stationVariable, ":</b>  ", .data[[stationVariable]],
-        "<br><b>AZMet Station:</b>  ", meta_station_name,
-        "<br><b>Date:</b>  ", gsub(" 0", " ", format(date_datetime, "%b %d, %Y")),
-        "<br><b>Time:</b>  ", format(date_datetime, "%H:%M:%S")
+        "<br><b>", stationVariable, ":</b> ", .data[[stationVariable]],
+        "<br><b>AZMet Station:</b> ", meta_station_name,
+        "<br><b>Date:</b> ", gsub(" 0", " ", format(date_datetime, "%b %d, %Y")),
+        "<br><b>Time:</b> ", format(date_datetime, "%H:%M:%S")
       ),
       showlegend = TRUE,
       legendgroup = "metaStationName",

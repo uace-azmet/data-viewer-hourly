@@ -23,6 +23,29 @@ fxn_hourlyData <- function(azmetStation, startDate, endDate) {
     dplyr::select(all_of(c(hourlyVarsID, hourlyVarsMeasured, hourlyVarsDerived))) %>%
     
     dplyr::mutate(
+      temp_soil_10cmC = dplyr::if_else(
+        meta_station_name == "Test",
+        NA_real_,
+        temp_soil_10cmC
+      ),
+      temp_soil_50cmC = dplyr::if_else(
+        meta_station_name == "Test",
+        NA_real_,
+        temp_soil_50cmC
+      ),
+      temp_soil_10cmF = dplyr::if_else(
+        meta_station_name == "Test",
+        NA_real_,
+        temp_soil_10cmF
+      ),
+      temp_soil_50cmF = dplyr::if_else(
+        meta_station_name == "Test",
+        NA_real_,
+        temp_soil_50cmF
+      )
+    ) |>
+    
+    dplyr::mutate(
       dplyr::across("wind_2min_timestamp", as.character)
     ) %>% 
     

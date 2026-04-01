@@ -39,14 +39,14 @@ timeseriesSidebar <-
         inputId = "stationGroup", 
         label = "Station Group",
         choices = NULL, # see `app.R`, shiny::updateSelectInput(inputId = "stationGroup")
-        selected = NULL # see `app.R`, shiny::updateSelectInput(inputId = "stationGroup")
+        selected = initialStationGroup
       ),
       
       shiny::selectInput(
         inputId = "stationVariable", 
         label = "Station Variable",
         choices = NULL, # see `app.R`, shiny::updateSelectInput(inputId = "stationVariable")
-        selected = NULL # see `app.R`, shiny::updateSelectInput(inputId = "stationVariable")
+        selected = initialStationVariable
       ),
       
       htmltools::p(

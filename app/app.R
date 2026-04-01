@@ -1,9 +1,5 @@
 # Tabular and graphical summaries of hourly data to support QA/QC
 
-# Add code for the following
-# 
-# 'azmet-shiny-template.html': <!-- Google tag (gtag.js) -->
-
 
 # UI --------------------
 
@@ -53,14 +49,16 @@ server <- function(input, output, session) {
       inputId = "stationGroup",
       label = "Station Group",
       choices = sort(unique(hourlyData()$meta_station_group)),
-      selected = sort(unique(hourlyData()$meta_station_group))[1]
+      selected = input$stationGroup
+      # selected = sort(unique(hourlyData()$meta_station_group))[1]
     )
     
     shiny::updateSelectInput(
       inputId = "stationVariable",
       label = "Station Variable",
       choices = c(hourlyVarsMeasured, hourlyVarsDerived),
-      selected = c(hourlyVarsMeasured, hourlyVarsDerived)[1]
+      selected = input$stationVariable
+      # selected = c(hourlyVarsMeasured, hourlyVarsDerived)[1]
     )
     
     shiny::updateTabsetPanel(
@@ -103,6 +101,14 @@ server <- function(input, output, session) {
         endDate = input$endDate
       )
   })
+  
+  timeseriesGraphTitle <- 
+    shiny::eventReactive(hourlyData(), {
+      fxn_timeseriesGraphTitle(
+        startDate = input$startDate,
+        endDate = input$endDate
+      )
+    })
   
   
   # Outputs -----
@@ -152,11 +158,7 @@ server <- function(input, output, session) {
   
   output$timeseriesGraphTitle <- 
     shiny::renderUI({
-      shiny::req(hourlyData())
-      fxn_timeseriesGraphTitle(
-        startDate = input$startDate,
-        endDate = input$endDate
-      )
+      timeseriesGraphTitle()
     })
   
   output$validationText <- 

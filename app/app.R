@@ -7,26 +7,28 @@
 
 # UI --------------------
 
+
 ui <- 
   htmltools::htmlTemplate(
     "azmet-shiny-template.html",
     
-    pageDataViewerHourly = bslib::page(
-      title = NULL,
-      theme = theme, # `scr##_theme.R`
-      #lang = "en",
-      
-      bslib::layout_sidebar(
-        sidebar = pageSidebar, # `scr##_slsSidebar.R`
-        shiny::uiOutput(outputId = "navsetCardTab")
-      ),
-      
-      shiny::htmlOutput(outputId = "pageBottomText") # Common, regardless of card tab
-    )
+    pageDataViewerHourly = 
+      bslib::page(
+        title = NULL,
+        theme = theme, # `scr##_theme.R`
+        
+        bslib::layout_sidebar(
+          sidebar = pageSidebar, # `scr##_slsSidebar.R`
+          shiny::uiOutput(outputId = "navsetCardTab")
+        ),
+        
+        shiny::htmlOutput(outputId = "pageBottomText") # Common, regardless of card tab
+      )
   )
 
 
 # Server --------------------
+
 
 server <- function(input, output, session) {
   shinyjs::useShinyjs(html = TRUE)
@@ -43,7 +45,9 @@ server <- function(input, output, session) {
   
   shiny::observeEvent(hourlyData(), {
     shinyjs::showElement(id = "pageBottomText")
+    shinyjs::showElement(id = "navsetCardTab")
     showNavsetCardTab(TRUE)
+    showPageBottomText(TRUE)
     
     shiny::updateSelectInput(
       inputId = "stationGroup",
@@ -69,79 +73,97 @@ server <- function(input, output, session) {
   
   # Reactives -----
   
-  hourlyData <- shiny::eventReactive(input$retrieveHourlyData, {
-    idRetrievingHourlyData <- shiny::showNotification(
-      ui = "Retrieving hourly data . . .",
-      action = NULL,
-      duration = NULL,
-      closeButton = FALSE,
-      id = "idRetrievingHourlyData",
-      type = "message"
-    )
+  hourlyData <- 
+    shiny::eventReactive(input$retrieveHourlyData, {
+      shiny::validate(
+        shiny::need(
+          expr = input$startDate <= input$endDate,
+          message = FALSE # Failing validation test
+        )
+      )
+      
+      idRetrievingHourlyData <- 
+        shiny::showNotification(
+          ui = "Retrieving hourly data . . .",
+          action = NULL,
+          duration = NULL,
+          closeButton = FALSE,
+          id = "idRetrievingHourlyData",
+          type = "message"
+        )
     
-    on.exit(
-      shiny::removeNotification(id = idRetrievingHourlyData), 
-      add = TRUE
-    )
+      on.exit(
+        shiny::removeNotification(id = idRetrievingHourlyData), 
+        add = TRUE
+      )
     
-    fxn_hourlyData(
-      azmetStation = NULL,
-      startDate = input$startDate,
-      endDate = input$endDate
-    )
+      fxn_hourlyData(
+        azmetStation = NULL,
+        startDate = input$startDate,
+        endDate = input$endDate
+      )
   })
   
   
   # Outputs -----
   
-  output$navsetCardTab <- shiny::renderUI({
-    shiny::req(showNavsetCardTab())
-    navsetCardTab # `scr##_navsetCardTab.R`
-  })
+  output$navsetCardTab <- 
+    shiny::renderUI({
+      shiny::req(showNavsetCardTab())
+      navsetCardTab # `scr##_navsetCardTab.R`
+    })
   
-  output$pageBottomText <- shiny::renderUI({
-    #shiny::req(hourlyData())
-    fxn_pageBottomText()
-  })
+  output$pageBottomText <- 
+    shiny::renderUI({
+      #shiny::req(hourlyData())
+      fxn_pageBottomText()
+    })
   
-  output$reportingText <- shiny::renderUI({
-    shiny::req(hourlyData())
-    htmltools::HTML(paste0("<br>", htmltools::span("Coming soon", style = "font-family: monospace;")))
-  })
+  output$reportingText <- 
+    shiny::renderUI({
+      shiny::req(hourlyData())
+      htmltools::HTML(paste0("<br>", htmltools::span("Coming soon", style = "font-family: monospace;")))
+    })
   
-  output$stationGroupsTable <- reactable::renderReactable({
-    stationGroupsTable
-  })
+  output$stationGroupsTable <- 
+    reactable::renderReactable({
+      stationGroupsTable
+    })
   
-  output$table <- renderTable({
-    hourlyData()
-  })
+  output$table <- 
+    renderTable({
+      hourlyData()
+    })
   
-  output$timeseriesGraph <- plotly::renderPlotly({
-    fxn_timeseriesGraph(
-      inData = hourlyData(),
-      stationGroup = input$stationGroup,
-      stationVariable = input$stationVariable
-    )
-  })
+  output$timeseriesGraph <- 
+    plotly::renderPlotly({
+      fxn_timeseriesGraph(
+        inData = hourlyData(),
+        stationGroup = input$stationGroup,
+        stationVariable = input$stationVariable
+      )
+    })
   
-  output$timeseriesGraphFooter <- shiny::renderUI({
-    shiny::req(hourlyData())
-    fxn_timeseriesGraphFooter()
-  })
+  output$timeseriesGraphFooter <- 
+    shiny::renderUI({
+      shiny::req(hourlyData())
+      fxn_timeseriesGraphFooter()
+    })
   
-  output$timeseriesGraphTitle <- shiny::renderUI({
-    shiny::req(hourlyData())
-    fxn_timeseriesGraphTitle(
-      startDate = input$startDate,
-      endDate = input$endDate
-    )
-  })
+  output$timeseriesGraphTitle <- 
+    shiny::renderUI({
+      shiny::req(hourlyData())
+      fxn_timeseriesGraphTitle(
+        startDate = input$startDate,
+        endDate = input$endDate
+      )
+    })
   
-  output$validationText <- shiny::renderUI({
-    shiny::req(hourlyData())
-    htmltools::HTML(paste0("<br>", htmltools::span("Coming soon", style = "font-family: monospace;")))
-  })
+  output$validationText <- 
+    shiny::renderUI({
+      shiny::req(hourlyData())
+      htmltools::HTML(paste0("<br>", htmltools::span("Coming soon", style = "font-family: monospace;")))
+    })
 }
 
 

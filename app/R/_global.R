@@ -42,7 +42,6 @@ azmetStationMetadata <- azmetr::station_info |>
 
 apiStartDate <- min(azmetStationMetadata$start_date)
 
-showNavsetCardTab <- reactiveVal(FALSE)
 
 # Identification and date variables
 hourlyVarsID <- 
@@ -101,7 +100,8 @@ hourlyVarsDerived <-
     "wind_vector_magnitude_mph"
   )
 
-# selectedTab <- shiny::reactiveVal(value = "Time Series")
+showNavsetCardTab <- reactiveVal(FALSE)
+showPageBottomText <- reactiveVal(FALSE)
 
 stationGroups <-
   tibble::tibble(

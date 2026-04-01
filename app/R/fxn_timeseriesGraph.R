@@ -13,6 +13,7 @@
 
 
 fxn_timeseriesGraph <- function(inData, stationGroup, stationVariable) {
+  
   inData <- inData |>
     dplyr::mutate(date_datetime = lubridate::ymd_hms(date_datetime))
   
@@ -32,22 +33,17 @@ fxn_timeseriesGraph <- function(inData, stationGroup, stationVariable) {
       type = "scatter",
       mode = "lines+markers",
       #color = "rgba(201, 201, 201, 1.0)",
-      marker = list(
-        color = "rgba(201, 201, 201, 1.0)",
-        size = 3
-      ),
-      line = list(
-        color = "rgba(201, 201, 201, 1.0)", 
-        width = 1
-      ),
+      marker = list(color = "rgba(201, 201, 201, 1.0)", size = 3),
+      line = list(color = "rgba(201, 201, 201, 1.0)", width = 1),
       name = "other stations",
       hoverinfo = "text",
-      text = ~paste0(
-        "<br><b>", stationVariable, ":</b> ", .data[[stationVariable]],
-        "<br><b>AZMet Station:</b> ", meta_station_name,
-        "<br><b>Date:</b> ", gsub(" 0", " ", format(date_datetime, "%b %d, %Y")),
-        "<br><b>Time:</b> ", format(date_datetime, "%H:%M:%S")
-      ),
+      text = 
+        ~paste0(
+          "<br><b>", stationVariable, ":</b> ", .data[[stationVariable]],
+          "<br><b>AZMet Station:</b> ", meta_station_name,
+          "<br><b>Date:</b> ", gsub(" 0", " ", format(date_datetime, "%b %d, %Y")),
+          "<br><b>Time:</b> ", format(date_datetime, "%H:%M:%S")
+        ),
       showlegend = TRUE,
       legendgroup = "dataOtherStations",
       legendrank = 2
@@ -61,22 +57,17 @@ fxn_timeseriesGraph <- function(inData, stationGroup, stationVariable) {
       type = "scatter",
       mode = "lines+markers",
       #color = ~meta_station_name,
-      marker = list(
-        #color = ~meta_station_name,
-        size = 3
-      ),
-      line = list(
-        color = ~meta_station_name, 
-        width = 1.5
-      ),
+      marker = list(size = 3),
+      line = list(color = ~meta_station_name, width = 1.5),
       name = ~meta_station_name,
       hoverinfo = "text",
-      text = ~paste0(
-        "<br><b>", stationVariable, ":</b> ", .data[[stationVariable]],
-        "<br><b>AZMet Station:</b> ", meta_station_name,
-        "<br><b>Date:</b> ", gsub(" 0", " ", format(date_datetime, "%b %d, %Y")),
-        "<br><b>Time:</b> ", format(date_datetime, "%H:%M:%S")
-      ),
+      text = 
+        ~paste0(
+          "<br><b>", stationVariable, ":</b> ", .data[[stationVariable]],
+          "<br><b>AZMet Station:</b> ", meta_station_name,
+          "<br><b>Date:</b> ", gsub(" 0", " ", format(date_datetime, "%b %d, %Y")),
+          "<br><b>Time:</b> ", format(date_datetime, "%H:%M:%S")
+        ),
       showlegend = TRUE,
       legendgroup = "metaStationName",
       legendrank = 1
@@ -85,75 +76,79 @@ fxn_timeseriesGraph <- function(inData, stationGroup, stationVariable) {
     plotly::config(
       displaylogo = FALSE,
       displayModeBar = TRUE,
-      modeBarButtonsToRemove = c(
-        "autoScale2d",
-        "hoverClosestCartesian", 
-        "hoverCompareCartesian", 
-        "lasso2d",
-        "select"
-      ),
+      modeBarButtonsToRemove = 
+        c(
+          "autoScale2d",
+          "hoverClosestCartesian", 
+          "hoverCompareCartesian", 
+          "lasso2d",
+          "select"
+        ),
       scrollZoom = FALSE,
-      toImageButtonOptions = list(
-        format = "png", # Either png, svg, jpeg, or webp
-        filename = "AZMet-data-viewer-daily-timeseries",
-        height = 400,
-        width = 700,
-        scale = 5
-      )
+      toImageButtonOptions = 
+        list(
+          format = "png", # Either png, svg, jpeg, or webp
+          filename = "AZMet-data-viewer-daily-timeseries",
+          height = 400,
+          width = 700,
+          scale = 5
+        )
     ) %>%
     
     plotly::layout(
-      font = list(
-        color = "#191919",
-        family = "proxima-nova, calibri, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
-        size = 13
-      ),
-      hoverlabel = list(
-        font = list(
+      font = 
+        list(
+          color = "#191919",
           family = "proxima-nova, calibri, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
-          size = 14
+          size = 13
+        ),
+      hoverlabel = 
+        list(
+          font = list(
+            family = "proxima-nova, calibri, -apple-system, BlinkMacSystemFont, \"Segoe UI\", Roboto, \"Helvetica Neue\", Arial, \"Noto Sans\", sans-serif, \"Apple Color Emoji\", \"Segoe UI Emoji\", \"Segoe UI Symbol\", \"Noto Color Emoji\"",
+            size = 14
+          )
+        ),
+      legend = 
+        list(
+          groupclick = "toggleitem",
+          orientation = "h",
+          traceorder = "normal",
+          x = 0.00,
+          xanchor = "left",
+          xref = "container",
+          y = 1.05,
+          yanchor = "bottom",
+          yref = "container"
+        ),
+      margin = 
+        list(
+          l = 0,
+          r = 50, # For space between plot and modebar
+          b = 80, # For space between x-axis title and caption or figure help text
+          t = 0,
+          pad = 0
+        ),
+      modebar = list(bgcolor = "#FFFFFF", orientation = "v"),
+      xaxis = 
+        list(
+          range = list(~(min(date_datetime) - 3000), ~(max(date_datetime) + 3000)), # unix timestamp values
+          title = list(
+            font = list(size = 14),
+            standoff = 25,
+            text = "<b>Date and Time</b>"
+          ),
+          zeroline = FALSE
+        ),
+      yaxis = 
+        list(
+          title = list(
+            font = list(size = 14),
+            standoff = 25,
+            text = ~paste0("<b>", stationVariable, "</b>")
+          ),
+          zeroline = FALSE
         )
-      ),
-      legend = list(
-        groupclick = "toggleitem",
-        orientation = "h",
-        traceorder = "normal",
-        x = 0.00,
-        xanchor = "left",
-        xref = "container",
-        y = 1.05,
-        yanchor = "bottom",
-        yref = "container"
-      ),
-      margin = list(
-        l = 0,
-        r = 50, # For space between plot and modebar
-        b = 80, # For space between x-axis title and caption or figure help text
-        t = 0,
-        pad = 0
-      ),
-      modebar = list(
-        bgcolor = "#FFFFFF",
-        orientation = "v"
-      ),
-      xaxis = list(
-        #range = list(~(min(datetime) - 1), ~(max(datetime) + 1)), # unix timestamp values
-        range = list(~(min(date_datetime) - 3000), ~(max(date_datetime) + 3000)), # unix timestamp values
-        title = list(
-          font = list(size = 14),
-          standoff = 25,
-          text = "<b>Date and Time</b>"
-        ),
-        zeroline = FALSE
-      ),
-      yaxis = list(
-        title = list(
-          font = list(size = 14),
-          standoff = 25,
-          text = ~paste0("<b>", stationVariable, "</b>")
-        ),
-        zeroline = FALSE
-      )
     )
   
   return(timeseriesGraph)

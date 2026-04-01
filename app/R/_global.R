@@ -100,9 +100,6 @@ hourlyVarsDerived <-
     "wind_vector_magnitude_mph"
   )
 
-initialStationGroup <- "Group 1"
-initialStationVariable <- "meta_bat_volt"
-
 showNavsetCardTab <- reactiveVal(FALSE)
 showPageBottomText <- reactiveVal(FALSE)
 

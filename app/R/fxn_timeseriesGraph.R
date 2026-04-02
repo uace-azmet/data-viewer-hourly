@@ -117,8 +117,10 @@ fxn_timeseriesGraph <- function(inData, stationGroup, stationVariable) {
           x = 0.00,
           xanchor = "left",
           xref = "container",
-          y = 1.05,
-          yanchor = "bottom",
+          # y = 1.05,
+          # yanchor = "bottom",
+          y = 1.0,
+          yanchor = "top",
           yref = "container"
         ),
       margin = 
@@ -130,6 +132,7 @@ fxn_timeseriesGraph <- function(inData, stationGroup, stationVariable) {
           pad = 0
         ),
       modebar = list(bgcolor = "#FFFFFF", orientation = "v"),
+      # transition = list(duration = 300, easing = "linear", ordering = "traces first"),
       xaxis = 
         list(
           range = list(~(min(date_datetime) - 3000), ~(max(date_datetime) + 3000)), # unix timestamp values

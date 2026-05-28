@@ -100,8 +100,9 @@ hourlyVarsDerived <-
     "wind_vector_magnitude_mph"
   )
 
-showNavsetCardTab <- reactiveVal(FALSE)
-showPageBottomText <- reactiveVal(FALSE)
+showDownloadButtonsDiv <- shiny::reactiveVal(FALSE)
+showNavsetCardTab <- shiny::reactiveVal(FALSE)
+showPageBottomText <- shiny::reactiveVal(FALSE)
 
 stationGroups <-
   tibble::tibble(

@@ -18,6 +18,7 @@ ui <-
           shiny::uiOutput(outputId = "navsetCardTab")
         ),
         
+        shiny::htmlOutput(outputId = "downloadButtonsDiv"), # Common, regardless of card tab
         shiny::htmlOutput(outputId = "pageBottomText") # Common, regardless of card tab
       )
   )
@@ -28,6 +29,7 @@ ui <-
 
 server <- function(input, output, session) {
   shinyjs::useShinyjs(html = TRUE)
+  shinyjs::hideElement("downloadButtonsDiv")
   shinyjs::hideElement(id = "pageBottomText")
   
   
@@ -40,8 +42,11 @@ server <- function(input, output, session) {
   })
   
   shiny::observeEvent(hourlyData(), {
+    shinyjs::showElement("downloadButtonsDiv")
     shinyjs::showElement(id = "pageBottomText")
     shinyjs::showElement(id = "navsetCardTab")
+    
+    showDownloadButtonsDiv(TRUE)
     showNavsetCardTab(TRUE)
     showPageBottomText(TRUE)
     
@@ -96,6 +101,28 @@ server <- function(input, output, session) {
   
   
   # Outputs -----
+  
+  output$downloadButtonsDiv <- 
+    shiny::renderUI({
+      shiny::req(showDownloadButtonsDiv())
+      fxn_downloadButtonsDiv()
+    })
+  
+  output$downloadCSV <- 
+    shiny::downloadHandler(
+      filename = function() {"AZMet-data-viewer-hourly.csv"},
+      content = function(file) {
+        vroom::vroom_write(x = hourlyData(), file = file, delim = ",")
+      }
+    )
+  
+  output$downloadTSV <- 
+    shiny::downloadHandler(
+      filename = function() {"AZMet-data-viewer-hourly.tsv"},
+      content = function(file) {
+        vroom::vroom_write(x = hourlyData(), file = file, delim = "\t")
+      }
+    )
   
   output$navsetCardTab <- 
     shiny::renderUI({
